@@ -1,9 +1,11 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const nodemailer = require("nodemailer");
+const cors = require('cors')
 const app = express();
 app.listen(3000);
 app.use(express.json());
+app.use(cors())
 
 const URL =
   "mongodb+srv://admin:admin123@loopacc.vzozr5w.mongodb.net/?retryWrites=true&w=majority&appName=loopacc";

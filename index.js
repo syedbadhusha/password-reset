@@ -28,7 +28,7 @@ app.post("/creatuser", async (req, res) => {
   }
 });
 // API to mail OTP to reset password
-app.get("/userbymailid", async (req, res) => {
+app.post("/userbymailid", async (req, res) => {
     const otpLink = req.body.otplink
   try {
     const connection = await MongoClient.connect(URL);
@@ -36,6 +36,7 @@ app.get("/userbymailid", async (req, res) => {
     const collection = db.collection("user");
     const userbymailid = await collection.findOne({ mailid: req.body.mailid });
     await connection.close();
+    console.log(userbymailid)
     if (!userbymailid) {
       throw "User Doesn't Exist"
     } else {

@@ -15,7 +15,7 @@ app.post("/creatuser", async (req, res) => {
     const connection = await MongoClient.connect(URL);
     const db = connection.db("passwordreset");
     const collection = db.collection("user");
-    const userAvail = collection.findOne({mailid:req.body.mailid})
+    const userAvail = await collection.findOne({mailid:req.body.mailid})
     if(userAvail){
       throw "User Already Exist's"
     }else{

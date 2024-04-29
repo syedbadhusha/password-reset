@@ -93,12 +93,10 @@ app.get('/verifyotp',async (req,res)=>{
         const connect = await MongoClient.connect(URL);
         const db = connect.db('passwordreset')
         const collection = db.collection('user')
-        const verifyOtp = await collection.findOne({mailid:mailid})
+        const verifyOtp = await collection.findOne({mailid:mailid} && {otp:otpCheck})
         await connect.close();
-        if(!verifyOtp.otp)
-        throw 'OTP has Entered Already Send Again'
-        if(verifyOtp.otp!==otpCheck)
-        throw 'Entered OTP is Incorrect please check'
+        if(!verifyOtp)
+        throw 'Entered OTP is Invalid Please check'
         res.status(200).json({message:"OTP has accepted successfully"});    
     }catch(error){
         res.status(501).json({message:error});    

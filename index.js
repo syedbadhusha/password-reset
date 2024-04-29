@@ -24,8 +24,7 @@ app.post("/creatuser", async (req, res) => {
       res.json({ message: "user Created" });  
     }
   } catch (err) {
-    console.log(err);
-    res.status(500).json({message:err});
+    res.status(500).json(err);
   }
 });
 // API to mail OTP to reset password
@@ -50,7 +49,6 @@ app.get("/userbymailid", async (req, res) => {
             return randomString;
           }
           const genotp = generateRandomString();
-    //   const genotp = Math.floor(Math.random() * 900000) + 100000;
       const reqmailid = req.body.mailid;
       const transporter = nodemailer.createTransport({
         service: "Gmail",
@@ -70,7 +68,7 @@ app.get("/userbymailid", async (req, res) => {
       try {
         await transporter.sendMail(mailing);
       } catch (err) {
-        console.log(err.message)
+        throw 'Check sender and Receiver Credentials'
       }
       const connectionotp = await MongoClient.connect(URL);
       const db = connectionotp.db("passwordreset");
